@@ -14,7 +14,7 @@
 /* ============== Base ================== */
 @layer base {
   body {
-    @apply bg-deep-dark font-inter text-gray-100 container mx-auto p-4 lg:px-0;
+    @apply bg-deep-dark font-inter text-gray-100;
   }
 }
 

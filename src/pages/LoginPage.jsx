@@ -4,9 +4,9 @@ import LoginForm from "../components/auth/LoginForm";
 
 const LoginPage = () => {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-deep-dark py-8">
+    <main className="flex-center min-h-screen bg-deep-dark py-8">
       <div className="max-w-342 flex-1">
-        <div className="grid items-center gap-8 lg:grid-cols-2">
+        <div className="container grid items-center gap-8 lg:grid-cols-2">
           <div>
             <img
               className="mb-12 max-w-full max-lg:hidden"
