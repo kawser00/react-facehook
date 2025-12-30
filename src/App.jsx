@@ -4,16 +4,18 @@ import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { Route, Routes } from "react-router";
+import PrivateRoutes from "./routes/PrivateRoutes";
 
 const App = () => {
   return (
     <>
       <Routes>
-        <Route element={<HomePage />} path="/" exact />
+        <Route element={<PrivateRoutes />}>
+          <Route element={<HomePage />} path="/" exact />
+          <Route element={<ProfilePage />} path="/me" />
+        </Route>
         <Route element={<LoginPage />} path="/login" />
-        <Route element={<ProfilePage />} path="/me" />
         <Route element={<RegistrationPage />} path="/register" />
-
         <Route element={<NotFoundPage />} path="*" />
       </Routes>
     </>
