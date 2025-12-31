@@ -1,12 +1,14 @@
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
 import Field from "../common/Field";
-import axios from "axios";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const { setAuth } = useAuth();
+  const { api } = useAxios();
 
   const {
     register,
@@ -15,32 +17,32 @@ const LoginForm = () => {
     setError,
   } = useForm();
 
-  const submitForm = async (formData) => {
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/auth/login`,
-        formData
-      );
+  const { mutate } = useMutation({
+    mutationFn: (formData) => api.post("/auth/login", formData),
+    onSuccess: (response) => {
+      const { token, user } = response.data;
+      if (token) {
+        const authToken = token.token;
+        const refreshToken = token.refreshToken;
 
-      if (response.status === 200) {
-        const { token, user } = response.data;
-        if (token) {
-          const authToken = token.token;
-          const refreshToken = token.refreshToken;
+        console.log(`Login time auth token: ${authToken}`);
+        setAuth({ user, authToken, refreshToken });
 
-          console.log(`Login time auth token: ${authToken}`);
-          setAuth({ user, authToken, refreshToken });
-
-          navigate("/");
-        }
+        navigate("/");
       }
-    } catch (error) {
-      console.error(error);
+    },
+    onError: (err, variables) => {
+      console.error(err);
+
       setError("root.random", {
         type: "random",
-        message: `User with email ${formData.email} is not found`,
+        message: `User with email ${variables.email} is not found`,
       });
-    }
+    },
+  });
+
+  const submitForm = async (formData) => {
+    mutate(formData);
   };
 
   return (
@@ -77,7 +79,11 @@ const LoginForm = () => {
           id="password"
         />
       </Field>
-      <p>{errors?.root?.random?.message}</p>
+      {errors?.root?.random && (
+        <p className="text-red-500 text-center pb-4">
+          {errors?.root?.random?.message}!
+        </p>
+      )}
       <Field>
         <button className="auth-input bg-lws-green font-bold text-deep-dark transition-all hover:opacity-90 cursor-pointer">
           Login
