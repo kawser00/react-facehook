@@ -7,8 +7,6 @@ const ProfileProvider = ({ children }) => {
     posts: [],
   });
 
-  console.log(profile);
-
   return (
     <ProfileContext.Provider value={{ profile, setProfile }}>
       {children}

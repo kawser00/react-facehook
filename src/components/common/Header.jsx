@@ -24,18 +24,18 @@ const Header = () => {
             <img src={HomeIcon} alt="Home" />
             Home
           </Link>
-          <button className="icon-btn">
+          <button className="icon-btn min-w-9">
             <img src={Notification} alt="Notification" />
           </button>
 
           <Logout />
 
-          <Link to="/me" className="flex-center ml-8! gap-3">
+          <Link to="/me" className="w-full flex-center ml-8! gap-3">
             <span className="text-lg font-medium lg:text-xl">
               {`${user?.firstName} ${user?.lastName}`}
             </span>
             <img
-              className="max-h-8 max-w-8 lg:max-h-11 lg:max-w-11"
+              className="w-full max-h-8 max-w-8 lg:max-h-11 lg:max-w-11 rounded-full object-cover"
               src={`${import.meta.env.VITE_SERVER_BASE_URL}/${user?.avatar}`}
               alt="avatar"
             />

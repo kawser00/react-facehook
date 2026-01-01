@@ -12,7 +12,7 @@ const Logout = () => {
   };
 
   return (
-    <button className="icon-btn" onClick={handleLogout}>
+    <button className="icon-btn min-w-9" onClick={handleLogout}>
       <img src={LogoutIcon} alt="Logout" />
     </button>
   );
