@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import useAxios from "../hooks/useAxios";
+import useProfile from "../hooks/useProfile";
 
 const ProfilePage = () => {
   const { api } = useAxios();
   const { auth } = useAuth();
+  const { profile, setProfile } = useProfile();
 
   const fetchProfileData = async ({ queryKey }) => {
     const response = await api.get(`/${queryKey[0]}/${queryKey[1]}`);
@@ -16,8 +19,17 @@ const ProfilePage = () => {
     queryFn: fetchProfileData,
   });
 
+  useEffect(() => {
+    if (data) {
+      setProfile({
+        user: data.user,
+        posts: data.posts,
+      });
+    }
+  }, [data, setProfile]);
+
   if (isLoading) {
-    return <div> Fetching your Profile data...</div>;
+    return <div>Fetching your Profile data...</div>;
   }
 
   if (error) {
@@ -26,8 +38,8 @@ const ProfilePage = () => {
 
   return (
     <div>
-      Welcome, {data?.user?.firstName} {data?.user?.lastName}
-      <p>You have {data?.posts?.length} posts.</p>
+      Welcome, {profile?.user?.firstName} {profile?.user?.lastName}
+      <p>You have {profile?.posts?.length} posts.</p>
     </div>
   );
 };
