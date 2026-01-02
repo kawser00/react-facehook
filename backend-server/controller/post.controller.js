@@ -68,15 +68,10 @@ const updatePost = (req, res) => {
     return res.status(404).send({ message: "No posts found" });
   }
 
-  const updatedContent = {
-    // eslint-disable-next-line node/no-unsupported-features/es-syntax
-    ...req.body,
-    image: req?.file?.filename ? `uploads/posts/${req?.file?.filename}` : post.image,
-  };
   const updatedPost = db
     .get("posts")
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
-    .updateById(postId, updatedContent)
+    .updateById(postId, { ...req.body })
     .write();
 
   return res.status(200).send(updatedPost);

@@ -1,6 +1,7 @@
 const jsonServer = require("json-server");
 const customRouter = require("./router");
 const express = require("express");
+const path = require("path");
 const checkAuth = require("./middleware/checkAuth");
 require("dotenv").config();
 const cors = require("cors");
@@ -10,7 +11,7 @@ const router = jsonServer.router("./database/db.json");
 
 app.use(cors({ credentials: true, origin: true }));
 app.use(express.static(__dirname + "/public"));
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // /!\ Bind the router db to the app
 app.db = router.db;

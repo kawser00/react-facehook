@@ -1,0 +1,4 @@
+{
+  "watch": ["main.js", "routes", "controllers"],
+  "ignore": ["uploads/**"]
+}

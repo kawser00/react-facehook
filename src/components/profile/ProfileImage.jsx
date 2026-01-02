@@ -7,7 +7,7 @@ import useProfile from "../../hooks/useProfile";
 
 const ProfileImage = () => {
   const { api } = useAxios();
-  const { profile } = useProfile();
+  const { profile, setProfile } = useProfile();
   const fileUploadRef = useRef(null);
 
   const queryClient = useQueryClient();
@@ -15,7 +15,15 @@ const ProfileImage = () => {
   const { mutate } = useMutation({
     mutationFn: (formData) =>
       api.post(`/profile/${profile?.user?.id}/avatar`, formData),
-    onSuccess: () => {
+    onSuccess: (response) => {
+      setProfile({
+        ...profile,
+        user: {
+          ...profile.user,
+          avatar: response?.data?.avatar,
+        },
+      });
+
       queryClient.invalidateQueries({
         queryKey: ["profile", profile?.user?.id],
       });
@@ -25,7 +33,7 @@ const ProfileImage = () => {
     },
   });
 
-  const uploadAndDisplayImage = () => {
+  const handleUploadChange = () => {
     const file = fileUploadRef.current.files[0];
     const formData = new FormData();
     if (file) {
@@ -36,7 +44,6 @@ const ProfileImage = () => {
 
   const handleImageUpload = (e) => {
     e.preventDefault();
-    fileUploadRef.current.addEventListener("change", uploadAndDisplayImage);
     fileUploadRef.current.click();
   };
 
@@ -49,16 +56,19 @@ const ProfileImage = () => {
           alt={profile?.user?.firstName}
         />
       </div>
-      <form id="form" encType="multipart/form-data">
-        <button
-          className="flex-center absolute bottom-4 right-4 h-7 w-7 rounded-full bg-black/50 hover:bg-black/80"
-          onClick={handleImageUpload}
-          type="submit"
-        >
-          <img src={EditIcon} alt="Edit" />
-        </button>
-        <input id="file" type="file" ref={fileUploadRef} hidden />
-      </form>
+      <button
+        className="flex-center absolute bottom-4 right-4 h-7 w-7 rounded-full bg-black/50 hover:bg-black/80"
+        onClick={handleImageUpload}
+        type="button"
+      >
+        <img src={EditIcon} alt="Edit" />
+      </button>
+      <input
+        hidden
+        type="file"
+        ref={fileUploadRef}
+        onChange={handleUploadChange}
+      />
     </div>
   );
 };

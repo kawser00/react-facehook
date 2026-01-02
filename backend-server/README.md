@@ -22,6 +22,7 @@ Preview as Documentation - [Preview](https://documenter.getpostman.com/view/9649
 
 
 
+
 # 📁 Collection: Auth
 
 ## End-point: Registration
