@@ -18,7 +18,7 @@ const PostHeader = ({ post }) => {
     <header className="flex items-center justify-between gap-4">
       <div className="flex items-center gap-3">
         <img
-          className="max-w-10 max-h-10 rounded-full lg:max-h-[58px] lg:max-w-[58px]"
+          className="max-w-10 max-h-10 rounded-full lg:max-h-14.5 lg:max-w-14.5"
           src={avatarURL}
           alt="avatar"
         />
@@ -33,7 +33,6 @@ const PostHeader = ({ post }) => {
           </div>
         </div>
       </div>
-
       <div className="relative">
         <button onClick={toggleAction}>
           <img src={ThreeDotsIcon} alt="3dots of Action" />
