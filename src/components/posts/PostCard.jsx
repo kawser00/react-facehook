@@ -6,7 +6,7 @@ import PostHeader from "./PostHeader";
 const PostCard = ({ post }) => {
   return (
     <article className="card mt-6 lg:mt-8">
-      <PostHeader />
+      <PostHeader post={post} />
       <PostBody />
       <PostActions />
       <PostComments />
