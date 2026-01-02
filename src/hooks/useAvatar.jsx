@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "../api/index";
+import { API_BASE_URL } from "../api";
 import { useProfile } from "./useProfile";
 
 export const useAvatar = (post) => {
