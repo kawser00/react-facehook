@@ -1,8 +1,13 @@
+import PostList from "../posts/PostList";
+import useProfile from "../../hooks/useProfile";
+
 const MyPosts = () => {
+  const { profile } = useProfile();
   return (
-    <div>
-      <h2>My Posts</h2>
-    </div>
+    <>
+      <h4 className="mt-6 text-xl lg:mt-8 lg:text-2xl">Your Posts</h4>
+      <PostList posts={profile?.posts} />
+    </>
   );
 };
 
