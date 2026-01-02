@@ -514,6 +514,28 @@
       "avatar": "uploads/avatar/avatar-1708802845791-219561000.png",
       "email": "rambo@email.com",
       "bio": "I am Rambo!!!"
+    },
+    {
+      "id": "3ea7c45c-e5a2-4e70-9338-e768c3f6cb75",
+      "firstName": "Kawser",
+      "lastName": "Ahmed",
+      "avatar": null,
+      "email": "a@gmail.com"
+    },
+    {
+      "id": "97ac8dc8-21a5-46be-876c-fc8b2d52e3f9",
+      "firstName": "Kawser",
+      "lastName": "Ahmed",
+      "avatar": null,
+      "email": "k@gmail.com"
+    },
+    {
+      "id": "3ac8e7dc-07b9-46f7-8883-9be4dc3b1c6d",
+      "password": "$2b$08$QqXBKuDOEXyPYgb9z/DzjuaXwqJZJeXEoFVJLGRjTvB6qA9RGfgo.",
+      "firstName": "Kawser",
+      "lastName": "Ahmed",
+      "avatar": null,
+      "email": "k@email.com"
     }
   ]
 }
