@@ -5,6 +5,7 @@ import Logo from "../../assets/images/logo.svg";
 import useAuth from "../../hooks/useAuth";
 import useProfile from "../../hooks/useProfile";
 import Logout from "../auth/Logout";
+import { API_BASE_URL } from "../../api";
 
 const Header = () => {
   const { auth } = useAuth();
@@ -36,7 +37,7 @@ const Header = () => {
             </span>
             <img
               className="w-full max-h-8 max-w-8 lg:max-h-11 lg:max-w-11 rounded-full object-cover"
-              src={`${import.meta.env.VITE_SERVER_BASE_URL}/${user?.avatar}`}
+              src={`${API_BASE_URL}/${user?.avatar}`}
               alt="avatar"
             />
           </Link>

@@ -36,7 +36,7 @@ const LoginForm = () => {
 
       setError("root.random", {
         type: "random",
-        message: `User with email ${variables.email} is not found`,
+        message: `User with email ${variables.email} or password is not correct`,
       });
     },
   });
