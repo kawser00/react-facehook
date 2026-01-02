@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ProfileContext } from "../context";
 
-const useProfile = () => {
+export const useProfile = () => {
   const context = useContext(ProfileContext);
 
   if (!context) {
@@ -10,5 +10,3 @@ const useProfile = () => {
 
   return context;
 };
-
-export default useProfile;

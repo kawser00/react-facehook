@@ -1,7 +1,7 @@
 import { useContext, useDebugValue } from "react";
 import { AuthContext } from "../context";
 
-const useAuth = () => {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   const { auth } = context || {};
 
@@ -13,5 +13,3 @@ const useAuth = () => {
 
   return context;
 };
-
-export default useAuth;

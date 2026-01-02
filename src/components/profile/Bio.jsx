@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import CheckIcon from "../../assets/icons/check.svg";
 import EditIcon from "../../assets/icons/edit.svg";
-import useAxios from "../../hooks/useAxios";
-import useProfile from "../../hooks/useProfile";
+import { useAxios } from "../../hooks/useAxios";
+import { useProfile } from "../../hooks/useProfile";
 
 const Bio = () => {
   const { api } = useAxios();

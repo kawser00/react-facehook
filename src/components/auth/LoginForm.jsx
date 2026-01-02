@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import useAuth from "../../hooks/useAuth";
-import useAxios from "../../hooks/useAxios";
+import { useAuth } from "../../hooks/useAuth";
+import { useAxios } from "../../hooks/useAxios";
 import Field from "../common/Field";
 
 const LoginForm = () => {

@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import MyPosts from "../components/profile/MyPosts";
 import ProfileInfo from "../components/profile/ProfileInfo";
-import useAuth from "../hooks/useAuth";
-import useAxios from "../hooks/useAxios";
-import useProfile from "../hooks/useProfile";
+import { useAuth } from "../hooks/useAuth";
+import { useAxios } from "../hooks/useAxios";
+import { useProfile } from "../hooks/useProfile";
 
 const ProfilePage = () => {
   const { api } = useAxios();

@@ -1,9 +1,9 @@
-import useProfile from "../../hooks/useProfile";
+import { useProfile } from "../../hooks/useProfile";
 import Bio from "./Bio";
 import ProfileImage from "./ProfileImage";
 
 const ProfileInfo = () => {
-  const {profile} = useProfile();
+  const { profile } = useProfile();
   return (
     <div className="flex flex-col items-center py-8 text-center">
       <ProfileImage />

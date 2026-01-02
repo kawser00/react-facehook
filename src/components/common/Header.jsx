@@ -1,11 +1,11 @@
 import { Link } from "react-router";
+import { API_BASE_URL } from "../../api";
 import HomeIcon from "../../assets/icons/home.svg";
 import Notification from "../../assets/icons/notification.svg";
 import Logo from "../../assets/images/logo.svg";
-import useAuth from "../../hooks/useAuth";
-import useProfile from "../../hooks/useProfile";
+import { useAuth } from "../../hooks/useAuth";
+import { useProfile } from "../../hooks/useProfile";
 import Logout from "../auth/Logout";
-import { API_BASE_URL } from "../../api";
 
 const Header = () => {
   const { auth } = useAuth();

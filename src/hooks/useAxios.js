@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { api, API_BASE_URL } from "../api";
-import useAuth from "./useAuth";
+import { useAuth } from "./useAuth";
 
-const useAxios = () => {
+export const useAxios = () => {
   const { auth, setAuth } = useAuth();
 
   useEffect(() => {
@@ -63,5 +63,3 @@ const useAxios = () => {
 
   return { api };
 };
-
-export default useAxios;
