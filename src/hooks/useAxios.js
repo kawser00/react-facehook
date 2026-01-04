@@ -1,7 +1,13 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { api, API_BASE_URL } from "../api";
+import {
+  api,
+  API_BASE_URL,
+  FACEHOOK_USER_SESSION_TOKEN,
+  FACEHOOK_USER_REFRESH_TOKEN,
+} from "../config";
 import { useAuth } from "./useAuth";
+import Cookies from "js-cookie";
 
 export const useAxios = () => {
   const { auth, setAuth } = useAuth();
@@ -42,12 +48,18 @@ export const useAxios = () => {
             console.log(`New Token: ${token}`);
             setAuth({ ...auth, authToken: token });
 
+             Cookies.set(FACEHOOK_USER_SESSION_TOKEN, token);
+             Cookies.set(FACEHOOK_USER_REFRESH_TOKEN, refreshToken);
+
             // Retry the original request with the new token
             originalRequest.headers.Authorization = `Bearer ${token}`;
             return axios(originalRequest);
           } catch (err) {
             setAuth(null);
-            Promise.reject(err);
+            Cookies.remove(FACEHOOK_USER_SESSION_TOKEN);
+            Cookies.remove(FACEHOOK_USER_REFRESH_TOKEN);
+            setAuth(null);
+            return Promise.reject(err);
           }
         }
 

@@ -1,6 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import {
+  FACEHOOK_USER_REFRESH_TOKEN,
+  FACEHOOK_USER_SESSION_TOKEN,
+  FACEHOOK_USER_INFO,
+} from "../../config";
 import { useAuth } from "../../hooks/useAuth";
 import { useAxios } from "../../hooks/useAxios";
 import Field from "../common/Field";
@@ -27,6 +33,10 @@ const LoginForm = () => {
 
         console.log(`Login time auth token: ${authToken}`);
         setAuth({ user, authToken, refreshToken });
+
+        Cookies.set(FACEHOOK_USER_SESSION_TOKEN, authToken);
+        Cookies.set(FACEHOOK_USER_REFRESH_TOKEN, refreshToken);
+        Cookies.set(FACEHOOK_USER_INFO, JSON.stringify(user));
 
         navigate("/");
       }

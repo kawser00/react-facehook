@@ -1,8 +1,8 @@
 import { Link } from "react-router";
-import { API_BASE_URL } from "../../api";
 import HomeIcon from "../../assets/icons/home.svg";
 import Notification from "../../assets/icons/notification.svg";
 import Logo from "../../assets/images/logo.svg";
+import { API_BASE_URL } from "../../config";
 import { useAuth } from "../../hooks/useAuth";
 import { useProfile } from "../../hooks/useProfile";
 import Logout from "../auth/Logout";
@@ -12,6 +12,7 @@ const Header = () => {
   const { profile } = useProfile();
 
   const user = profile?.user ?? auth?.user;
+  console.log(user)
 
   return (
     <nav className="sticky top-0 z-50 border-b border-[#3F3F3F] bg-[#1E1F24] py-4">

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
-import { API_BASE_URL } from "../../api";
 import EditIcon from "../../assets/icons/edit.svg";
+import { API_BASE_URL } from "../../config";
 import { useAxios } from "../../hooks/useAxios";
 import { useProfile } from "../../hooks/useProfile";
 
