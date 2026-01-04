@@ -19,8 +19,6 @@ const AuthProvider = ({ children }) => {
     refreshToken: refreshTokenString ? decode(refreshTokenString) : null,
   });
 
-  console.log(auth)
-
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       {children}
