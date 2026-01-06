@@ -35,10 +35,16 @@ const HomePage = () => {
     );
   }
 
+  const sortedData = data?.sort(
+    (a, b) => new Date(b.createAt) - new Date(a.createAt)
+  );
+
+  console.log(data)
+
   return (
     <div>
       <NewPost />
-      <PostList posts={data || []} />
+      <PostList posts={sortedData || []} />
     </div>
   );
 };
