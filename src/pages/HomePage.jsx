@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import NewPost from "../components/posts/NewPost";
 import PostList from "../components/posts/PostList";
 import { useAxios } from "../hooks/useAxios";
 
@@ -20,11 +21,14 @@ const HomePage = () => {
   }
 
   if (error) {
-    return <div className="text-red-500">Error fetching posts! {error.message}</div>;
+    return (
+      <div className="text-red-500">Error fetching posts! {error.message}</div>
+    );
   }
 
   return (
     <div>
+      <NewPost />
       <PostList posts={data || []} />
     </div>
   );
