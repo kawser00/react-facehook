@@ -23,7 +23,7 @@ const LoginForm = () => {
     setError,
   } = useForm();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (formData) => api.post("/auth/login", formData),
     onSuccess: (response) => {
       const { token, user } = response.data;
@@ -51,7 +51,7 @@ const LoginForm = () => {
     },
   });
 
-  const submitForm = async (formData) => {
+  const submitForm = (formData) => {
     mutate(formData);
   };
 
@@ -96,7 +96,7 @@ const LoginForm = () => {
       )}
       <Field>
         <button className="auth-input bg-lws-green font-bold text-deep-dark transition-all hover:opacity-90 cursor-pointer">
-          Login
+          {isPending ? "Logging in..." : "Login"}
         </button>
       </Field>
     </form>

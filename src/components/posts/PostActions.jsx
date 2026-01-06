@@ -2,9 +2,7 @@ import CommentIcon from "../../assets/icons/comment.svg";
 import LikeIcon from "../../assets/icons/like.svg";
 import ShareIcon from "../../assets/icons/share.svg";
 
-const PostActions = ({ postId, commentCount }) => {
-  console.log(postId);
-
+const PostActions = ({ commentCount }) => {
   return (
     <div className="flex items-center justify-between py-6 lg:px-10 lg:py-8">
       <button className="flex-center gap-2 text-xs font-bold text-[#B8BBBF] hover:text-white lg:text-sm">

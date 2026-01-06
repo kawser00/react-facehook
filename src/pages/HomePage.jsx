@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import NewPost from "../components/posts/NewPost";
 import PostList from "../components/posts/PostList";
 import { useAxios } from "../hooks/useAxios";
+import { usePosts } from "../hooks/usePosts";
 
 const HomePage = () => {
   const { api } = useAxios();
+  const { setPosts } = usePosts();
 
   const fetchPosts = async ({ queryKey }) => {
     const response = await api.get(`/${queryKey[0]}`);
@@ -15,6 +18,12 @@ const HomePage = () => {
     queryKey: ["posts"],
     queryFn: fetchPosts,
   });
+
+  useEffect(() => {
+    if (data) {
+      setPosts(data);
+    }
+  }, [data, setPosts]);
 
   if (isLoading) {
     return <div>Fetching posts...</div>;

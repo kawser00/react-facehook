@@ -15,7 +15,7 @@ const RegistrationForm = () => {
     setError,
   } = useForm();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (formData) => api.post("/auth/register", formData),
     onSuccess: () => {
       navigate("/login");
@@ -30,7 +30,7 @@ const RegistrationForm = () => {
     },
   });
 
-  const submitForm = async (formData) => {
+  const submitForm = (formData) => {
     mutate(formData);
   };
 
@@ -97,7 +97,7 @@ const RegistrationForm = () => {
         className="auth-input bg-lws-green font-bold text-deep-dark transition-all hover:opacity-90"
         type="submit"
       >
-        Register
+        {isPending ? "Registering..." : "Register"}
       </button>
     </form>
   );

@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { PostContext } from "../context";
 
-export const usePost = () => {
+export const usePosts = () => {
   const context = useContext(PostContext);
 
   if (!context) {
-    throw new Error("usePost must be used within a PostProvider");
+    throw new Error("usePosts must be used within a PostProvider");
   }
 
   return context;

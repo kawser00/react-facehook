@@ -1,20 +1,44 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import AddPhoto from "../../assets/icons/addPhoto.svg";
 import { API_BASE_URL } from "../../config";
+import { useAxios } from "../../hooks/useAxios";
+import { usePosts } from "../../hooks/usePosts";
 import { useUserInfo } from "../../hooks/useUserInfo";
 import Field from "../common/Field";
 
 const PostEntry = ({ onCreate }) => {
+  const { posts, setPosts } = usePosts();
+  const queryClient = useQueryClient();
   const { user } = useUserInfo();
+  const { api } = useAxios();
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm();
 
-  const handlePostSubmit = async (formData) => {
-    console.log(formData);
-    onCreate();
+  const { mutate, isPending } = useMutation({
+    mutationFn: (formData) => api.post("/posts", formData),
+    onSuccess: (response) => {
+      setPosts([...posts, response?.data]);
+
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      onCreate();
+    },
+    onError: (err) => {
+      console.error(err);
+
+      setError("root.random", {
+        type: "random",
+        message: `Something went wrong: ${err.message}`,
+      });
+    },
+  });
+
+  const handlePostSubmit = (formData) => {
+    mutate(formData);
   };
 
   return (
@@ -59,12 +83,15 @@ const PostEntry = ({ onCreate }) => {
             className="h-30 w-full bg-transparent focus:outline-none lg:h-40"
           ></textarea>
         </Field>
+        {errors?.root?.random && (
+          <p className="text-red-500 pb-2">{errors?.root?.random?.message}</p>
+        )}
         <div className="border-t border-[#3F3F3F] pt-4 lg:pt-6">
           <button
             className="auth-input bg-lwsGreen font-bold text-deepDark transition-all hover:opacity-90"
             type="submit"
           >
-            Post
+            {isPending ? "Posting..." : "Post"}
           </button>
         </div>
       </form>
