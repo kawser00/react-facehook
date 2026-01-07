@@ -12,6 +12,7 @@ const PostEntry = ({ onCreate }) => {
   const queryClient = useQueryClient();
   const { user } = useUserInfo();
   const { api } = useAxios();
+
   const {
     register,
     handleSubmit,
@@ -37,7 +38,17 @@ const PostEntry = ({ onCreate }) => {
     },
   });
 
-  const handlePostSubmit = (formData) => {
+  const handlePostSubmit = (data) => {
+    const formData = new FormData();
+    const avatar = data.photo[0];
+
+    if (avatar) {
+      formData.append("image", avatar);
+      formData.append("content", data.content);
+    } else {
+      formData.append("content", data.content);
+    }
+    
     mutate(formData);
   };
 
@@ -70,7 +81,13 @@ const PostEntry = ({ onCreate }) => {
             <img src={AddPhoto} alt="Add Photo" />
             Add Photo
           </label>
-          <input type="file" name="photo" id="photo" className="hidden" />
+          <input
+            hidden
+            type="file"
+            name="photo"
+            id="photo"
+            {...register("photo")}
+          />
         </div>
         <Field label="" error={errors.content}>
           <textarea

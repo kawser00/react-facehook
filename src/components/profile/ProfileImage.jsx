@@ -37,7 +37,7 @@ const ProfileImage = () => {
     const file = fileUploadRef.current.files[0];
     const formData = new FormData();
     if (file) {
-      formData.append("avatar", file);
+      formData.append("avatar", file); // output: { avatar: file }
       mutate(formData);
     }
   };
