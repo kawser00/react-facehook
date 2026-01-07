@@ -9,7 +9,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useAvatar } from "../../hooks/useAvatar";
 import { getDateDifferenceFromNow } from "../../utils";
 
-const PostHeader = ({ post }) => {
+const PostHeader = ({ post, setEditingPost }) => {
   const [showAction, setShowAction] = useState(false);
   const { auth } = useAuth();
   const { avatarURL } = useAvatar(post);
@@ -58,7 +58,13 @@ const PostHeader = ({ post }) => {
         )}
         {showAction && (
           <div className="action-modal-container">
-            <button className="action-menu-item hover:text-lws-green cursor-pointer">
+            <button
+              className="action-menu-item hover:text-lws-green cursor-pointer"
+              onClick={() => {
+                setEditingPost(post);
+                setShowAction(false);
+              }}
+            >
               <img src={EditIcon} alt="Edit" />
               Edit
             </button>

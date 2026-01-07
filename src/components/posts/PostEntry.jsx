@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import AddPhoto from "../../assets/icons/addPhoto.svg";
 import { API_BASE_URL } from "../../config";
@@ -7,26 +8,49 @@ import { usePosts } from "../../hooks/usePosts";
 import { useUserInfo } from "../../hooks/useUserInfo";
 import Field from "../common/Field";
 
-const PostEntry = ({ onCreate }) => {
+const PostEntry = ({ onCreate, post }) => {
   const { posts, setPosts } = usePosts();
   const queryClient = useQueryClient();
   const { user } = useUserInfo();
   const { api } = useAxios();
+  const isEdit = !!post;
 
   const {
     register,
     handleSubmit,
     setError,
+    reset,
+    setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      content: post?.content || "",
+    },
+  });
+
+  useEffect(() => {
+    if (post) {
+      setValue("content", post.content);
+    }
+  }, [post, setValue]);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (formData) => api.post("/posts", formData),
+    mutationFn: isEdit
+      ? (formData) => api.patch(`/posts/${post.id}`, formData)
+      : (formData) => api.post("/posts", formData),
     onSuccess: (response) => {
-      setPosts([...posts, response?.data]);
+      if (isEdit) {
+        const updatedPosts = posts.map((p) =>
+          p.id === post.id ? response?.data : p
+        );
+        setPosts(updatedPosts);
+      } else {
+        setPosts([...posts, response?.data]);
+      }
 
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       onCreate();
+      reset();
     },
     onError: (err) => {
       console.error(err);
@@ -40,22 +64,21 @@ const PostEntry = ({ onCreate }) => {
 
   const handlePostSubmit = (data) => {
     const formData = new FormData();
-    const avatar = data.photo[0];
+    const photo = data.photo?.[0];
 
-    if (avatar) {
-      formData.append("image", avatar);
-      formData.append("content", data.content);
-    } else {
-      formData.append("content", data.content);
+    formData.append("content", data.content);
+
+    if (photo) {
+      formData.append("image", photo);
     }
-    
+
     mutate(formData);
   };
 
   return (
     <div className="card relative">
       <h6 className="mb-3 text-center text-lg font-bold lg:text-xl">
-        Create Post
+        {isEdit ? "Edit Post" : "Create Post"}
       </h6>
       <form onSubmit={handleSubmit(handlePostSubmit)}>
         <div className="mb-3 flex items-center justify-between gap-2 lg:mb-6 lg:gap-4">
@@ -108,7 +131,13 @@ const PostEntry = ({ onCreate }) => {
             className="auth-input bg-lws-green font-bold text-deep-dark transition-all hover:opacity-90"
             type="submit"
           >
-            {isPending ? "Posting..." : "Post"}
+            {isPending
+              ? isEdit
+                ? "Updating..."
+                : "Posting..."
+              : isEdit
+              ? "Update"
+              : "Post"}
           </button>
         </div>
       </form>

@@ -1,13 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NewPost from "../components/posts/NewPost";
 import PostList from "../components/posts/PostList";
+import PostEntry from "../components/posts/PostEntry";
 import { useAxios } from "../hooks/useAxios";
 import { usePosts } from "../hooks/usePosts";
 
 const HomePage = () => {
   const { api } = useAxios();
   const { setPosts } = usePosts();
+  const [editingPost, setEditingPost] = useState(null);
 
   const fetchPosts = async ({ queryKey }) => {
     const response = await api.get(`/${queryKey[0]}`);
@@ -43,8 +45,12 @@ const HomePage = () => {
 
   return (
     <div>
-      <NewPost />
-      <PostList posts={sortedData || []} />
+      {editingPost ? (
+        <PostEntry post={editingPost} onCreate={() => setEditingPost(null)} />
+      ) : (
+        <NewPost />
+      )}
+      <PostList posts={sortedData || []} setEditingPost={setEditingPost} />
     </div>
   );
 };
