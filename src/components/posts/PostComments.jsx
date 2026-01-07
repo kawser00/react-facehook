@@ -1,13 +1,39 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useAvatar } from "../../hooks/useAvatar";
+import { useAxios } from "../../hooks/useAxios";
 import PostCommentList from "./PostCommentList";
 
 const PostComments = ({ post }) => {
+  const { api } = useAxios();
   const { avatarURL } = useAvatar(post);
   const [showComments, setShowComments] = useState(true);
+  const [comments, setComments] = useState(post?.comments ?? []);
+  const [comment, setComment] = useState("");
+
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: () => api.patch(`/posts/${post.id}/comment`, { comment }),
+    onSuccess: (response) => {
+      setComments([...(response?.data?.comments ?? [])]);
+      setComment("");
+
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
 
   const toggleAction = () => {
     setShowComments(!showComments);
+  };
+
+  const addComment = (e) => {
+    if (e.key === "Enter" || e.keyCode === 13) {
+      mutate();
+    }
   };
 
   return (
@@ -26,10 +52,13 @@ const PostComments = ({ post }) => {
             name="post"
             id="post"
             placeholder="What's on your mind?"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            onKeyDown={(e) => addComment(e)}
           />
         </div>
       </div>
-      {post?.comments?.length > 0 && (
+      {comments?.length > 0 && (
         <>
           <div className="mt-4">
             <button
@@ -39,7 +68,7 @@ const PostComments = ({ post }) => {
               All Comment ▾
             </button>
           </div>
-          {showComments && <PostCommentList comments={post?.comments} />}
+          {showComments && <PostCommentList comments={comments} />}
         </>
       )}
     </div>

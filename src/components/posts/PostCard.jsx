@@ -8,7 +8,7 @@ const PostCard = ({ post }) => {
     <article className="card mt-6 lg:mt-8">
       <PostHeader post={post} />
       <PostBody poster={post?.image} content={post?.content} />
-      <PostActions postId={post?.id} commentCount={post?.comments?.length} />
+      <PostActions post={post} commentCount={post?.comments?.length} />
       <PostComments post={post} />
     </article>
   );
