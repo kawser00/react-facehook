@@ -1,17 +1,31 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import ThreeDotsIcon from "../../assets/icons/3dots.svg";
 import DeleteIcon from "../../assets/icons/delete.svg";
 import EditIcon from "../../assets/icons/edit.svg";
 import TimeIcon from "../../assets/icons/time.svg";
+import { api } from "../../config";
+import { useAuth } from "../../hooks/useAuth";
 import { useAvatar } from "../../hooks/useAvatar";
 import { getDateDifferenceFromNow } from "../../utils";
-import { useAuth } from "../../hooks/useAuth";
 
 const PostHeader = ({ post }) => {
   const [showAction, setShowAction] = useState(false);
   const { auth } = useAuth();
   const { avatarURL } = useAvatar(post);
   const isMe = post?.author?.id == auth?.user?.id;
+
+  const queryClient = useQueryClient();
+
+  const { mutate: deletePost } = useMutation({
+    mutationFn: () => api.delete(`/posts/${post.id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
 
   const toggleAction = () => {
     setShowAction(!showAction);
@@ -38,18 +52,20 @@ const PostHeader = ({ post }) => {
       </div>
       <div className="relative">
         {isMe && (
-          <button onClick={toggleAction}>
+          <button onClick={toggleAction} className="cursor-pointer">
             <img src={ThreeDotsIcon} alt="3dots of Action" />
           </button>
         )}
-
         {showAction && (
           <div className="action-modal-container">
-            <button className="action-menu-item hover:text-lwsGreen">
+            <button className="action-menu-item hover:text-lws-green cursor-pointer">
               <img src={EditIcon} alt="Edit" />
               Edit
             </button>
-            <button className="action-menu-item hover:text-red-500">
+            <button
+              className="action-menu-item hover:text-red-500 cursor-pointer"
+              onClick={() => deletePost()}
+            >
               <img src={DeleteIcon} alt="Delete" />
               Delete
             </button>

@@ -22,7 +22,7 @@ const NewPost = () => {
 
             <div className="flex-1">
               <textarea
-                className="h-16 w-full rounded-md bg-lighterDark p-3 focus:outline-none sm:h-20 sm:p-6"
+                className="h-16 w-full rounded-md bg-lighter-dark p-3 focus:outline-none sm:h-20 sm:p-6"
                 name="post"
                 id="post"
                 placeholder="What's on your mind?"

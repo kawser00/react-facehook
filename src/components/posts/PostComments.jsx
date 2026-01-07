@@ -44,7 +44,6 @@ const PostComments = ({ post }) => {
           src={avatarURL}
           alt="avatar"
         />
-
         <div className="flex-1">
           <input
             type="text"

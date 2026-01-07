@@ -105,7 +105,7 @@ const PostEntry = ({ onCreate }) => {
         )}
         <div className="border-t border-[#3F3F3F] pt-4 lg:pt-6">
           <button
-            className="auth-input bg-lwsGreen font-bold text-deepDark transition-all hover:opacity-90"
+            className="auth-input bg-lws-green font-bold text-deep-dark transition-all hover:opacity-90"
             type="submit"
           >
             {isPending ? "Posting..." : "Post"}

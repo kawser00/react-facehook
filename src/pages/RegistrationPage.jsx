@@ -29,7 +29,7 @@ const RegistrationPage = () => {
               <p className="text-center text-xs text-gray-600/95 lg:text-sm mx-2">
                 Already have an account?
                 <Link
-                  className="mx-2 hover:text-lwsGreen text-white transition-all hover:underline"
+                  className="mx-2 hover:text-lws-green text-white transition-all hover:underline"
                   to="/"
                 >
                   Login
