@@ -5,10 +5,13 @@ import EditIcon from "../../assets/icons/edit.svg";
 import TimeIcon from "../../assets/icons/time.svg";
 import { useAvatar } from "../../hooks/useAvatar";
 import { getDateDifferenceFromNow } from "../../utils";
+import { useAuth } from "../../hooks/useAuth";
 
 const PostHeader = ({ post }) => {
-  const { avatarURL } = useAvatar(post);
   const [showAction, setShowAction] = useState(false);
+  const { auth } = useAuth();
+  const { avatarURL } = useAvatar(post);
+  const isMe = post?.author?.id == auth?.user?.id;
 
   const toggleAction = () => {
     setShowAction(!showAction);
@@ -34,9 +37,11 @@ const PostHeader = ({ post }) => {
         </div>
       </div>
       <div className="relative">
-        <button onClick={toggleAction}>
-          <img src={ThreeDotsIcon} alt="3dots of Action" />
-        </button>
+        {isMe && (
+          <button onClick={toggleAction}>
+            <img src={ThreeDotsIcon} alt="3dots of Action" />
+          </button>
+        )}
 
         {showAction && (
           <div className="action-modal-container">
